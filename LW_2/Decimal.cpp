@@ -45,7 +45,7 @@ Decimal Decimal::operator-(const Decimal& other) const {
 
 Decimal& Decimal::operator+=(const Decimal& other) {
     size_t maxSize = std::max(size, other.size);
-    resize(maxSize + 1); 
+    resize(maxSize + 1);  
 
     unsigned char carry = 0;
     for (size_t i = 0; i < maxSize; ++i) {
@@ -134,6 +134,16 @@ std::istream& operator>>(std::istream& is, Decimal& decimal) {
     return is;
 }
 
+
+std::string Decimal::toString() const {
+    std::string result;
+    result.reserve(size);
+    for (size_t i = size - 1; i < size; --i) {
+        result.push_back(digits[i] + '0');
+    }
+    return result;
+}
+
 void Decimal::normalize() {
     size_t newSize = size;
     while (newSize > 1 && digits[newSize - 1] == 0) {
@@ -152,6 +162,7 @@ void Decimal::resize(size_t newSize) {
     digits = newDigits;
     size = newSize;
 }
+
 
 void Decimal::setValue(unsigned long long value) {
     size_t newSize = 0;
