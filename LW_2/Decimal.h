@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 class Decimal {
 public:
@@ -29,9 +30,11 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Decimal& decimal);
     friend std::istream& operator>>(std::istream& is, Decimal& decimal);
 
+    std::string toString() const;
+
 private:
     unsigned char* digits;  
-    size_t size;           
+    size_t size;            
 
     void normalize();
     void resize(size_t newSize);
@@ -39,4 +42,5 @@ private:
     void setValue(const std::string& str);
 };
 
-#endif // DECIMAL_H
+#endif
+
