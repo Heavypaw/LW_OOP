@@ -3,89 +3,115 @@
 
 TEST(DecimalTest, DefaultConstructor) {
     Decimal d;
-    ASSERT_EQ(d.toString(), "0");
+    EXPECT_EQ(d.toString(), "0");
 }
 
-TEST(DecimalTest, StringConstructor) {
+TEST(DecimalTest, ConstructorFromULL) {
+    Decimal d(12345678901234567890ULL);
+    EXPECT_EQ(d.toString(), "12345678901234567890");
+}
+
+TEST(DecimalTest, ConstructorFromString) {
     Decimal d("12345678901234567890");
-    ASSERT_EQ(d.toString(), "12345678901234567890");
+    EXPECT_EQ(d.toString(), "12345678901234567890");
 }
 
 TEST(DecimalTest, CopyConstructor) {
     Decimal d1("12345678901234567890");
     Decimal d2(d1);
-    ASSERT_EQ(d2.toString(), "12345678901234567890");
+    EXPECT_EQ(d2.toString(), "12345678901234567890");
 }
 
-TEST(DecimalTest, MoveConstructor) {
+TEST(DecimalTest, AssignmentOperator) {
     Decimal d1("12345678901234567890");
-    Decimal d2(std::move(d1));
-    ASSERT_EQ(d2.toString(), "12345678901234567890");
+    Decimal d2;
+    d2 = d1;
+    EXPECT_EQ(d2.toString(), "12345678901234567890");
 }
 
-TEST(DecimalTest, Addition) {
+TEST(DecimalTest, AdditionOperator) {
     Decimal d1("12345678901234567890");
     Decimal d2("98765432109876543210");
-    Decimal sum = d1 + d2;
-    ASSERT_EQ(sum.toString(), "111111111011111111100");
+    Decimal result = d1 + d2;
+    EXPECT_EQ(result.toString(), "111111111011111111100");
 }
 
-TEST(DecimalTest, Subtraction) {
+TEST(DecimalTest, SubtractionOperator) {
     Decimal d1("98765432109876543210");
     Decimal d2("12345678901234567890");
-    Decimal diff = d1 - d2;
-    ASSERT_EQ(diff.toString(), "86419753208641975320");
+    Decimal result = d1 - d2;
+    EXPECT_EQ(result.toString(), "86419753208641975320");
 }
 
-TEST(DecimalTest, AdditionAssignment) {
+TEST(DecimalTest, AdditionAssignmentOperator) {
     Decimal d1("12345678901234567890");
     Decimal d2("98765432109876543210");
     d1 += d2;
-    ASSERT_EQ(d1.toString(), "111111111011111111100");
+    EXPECT_EQ(d1.toString(), "111111111011111111100");
 }
 
-TEST(DecimalTest, SubtractionAssignment) {
+TEST(DecimalTest, SubtractionAssignmentOperator) {
     Decimal d1("98765432109876543210");
     Decimal d2("12345678901234567890");
     d1 -= d2;
-    ASSERT_EQ(d1.toString(), "86419753208641975320");
+    EXPECT_EQ(d1.toString(), "86419753208641975320");
 }
 
-TEST(DecimalTest, Equality) {
+TEST(DecimalTest, EqualityOperator) {
     Decimal d1("12345678901234567890");
     Decimal d2("12345678901234567890");
-    ASSERT_TRUE(d1 == d2);
+    EXPECT_TRUE(d1 == d2);
 }
 
-TEST(DecimalTest, Inequality) {
+TEST(DecimalTest, InequalityOperator) {
     Decimal d1("12345678901234567890");
     Decimal d2("98765432109876543210");
-    ASSERT_TRUE(d1 != d2);
+    EXPECT_TRUE(d1 != d2);
 }
 
-TEST(DecimalTest, LessThan) {
+TEST(DecimalTest, LessThanOperator) {
     Decimal d1("12345678901234567890");
     Decimal d2("98765432109876543210");
-    ASSERT_TRUE(d1 < d2);
+    EXPECT_TRUE(d1 < d2);
 }
 
-TEST(DecimalTest, GreaterThan) {
+TEST(DecimalTest, GreaterThanOperator) {
     Decimal d1("98765432109876543210");
     Decimal d2("12345678901234567890");
-    ASSERT_TRUE(d1 > d2);
+    EXPECT_TRUE(d1 > d2);
 }
 
-TEST(DecimalTest, LessThanOrEqual) {
+TEST(DecimalTest, LessThanOrEqualOperator) {
     Decimal d1("12345678901234567890");
     Decimal d2("98765432109876543210");
-    ASSERT_TRUE(d1 <= d2);
+    EXPECT_TRUE(d1 <= d2);
 }
 
-TEST(DecimalTest, GreaterThanOrEqual) {
+TEST(DecimalTest, GreaterThanOrEqualOperator) {
     Decimal d1("98765432109876543210");
     Decimal d2("12345678901234567890");
-    ASSERT_TRUE(d1 >= d2);
+    EXPECT_TRUE(d1 >= d2);
 }
+
+TEST(DecimalTest, InputOperator) {
+    Decimal d;
+    std::istringstream iss("12345678901234567890");
+    iss >> d;
+    EXPECT_EQ(d.toString(), "12345678901234567890");
+}
+
+TEST(DecimalTest, OutputOperator) {
+    Decimal d("12345678901234567890");
+    std::ostringstream oss;
+    oss << d;
+    EXPECT_EQ(oss.str(), "12345678901234567890");
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
