@@ -1,0 +1,3 @@
+Squirrel 10 20 Squirrel1
+Elf 30 40 Elf1
+Bandit 50 60 Bandit1
